@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace SubripFixer.UI_SearchTitle.Model
 {
@@ -58,6 +59,29 @@ namespace SubripFixer.UI_SearchTitle.Model
                 if (int.TryParse(ListContent.Last(), out _))
                 {
                     ListContent.RemoveAt(ListContent.Count - 1);
+                }
+            }
+
+            //remove ignored content
+            if (Properties.Settings.Default.Sub_IgnoreText)
+            {
+                string[] listIgnore = Properties.Settings.Default.Sub_ListIgnoreText.Split('\n');
+                for (int i = 0; i < listIgnore.Length; ++i)
+                {
+                    listIgnore[i] = listIgnore[i].Trim();
+                }
+                for (int i = 0; i < ListContent.Count; ++i)
+                {
+                    for (int k = 0; k < listIgnore.Length; ++k)
+                    {
+                        if (listIgnore[k].Length > 0)
+                        {
+                            while (ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                ListContent[i] = ListContent[i].Remove(ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase), listIgnore[k].Length);
+                            }
+                        }
+                    }
                 }
             }
 

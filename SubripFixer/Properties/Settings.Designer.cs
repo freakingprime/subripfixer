@@ -166,5 +166,29 @@ namespace SubripFixer.Properties {
                 this["Sub_FixTimestamp"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Sub_IgnoreText {
+            get {
+                return ((bool)(this["Sub_IgnoreText"]));
+            }
+            set {
+                this["Sub_IgnoreText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Sub_ListIgnoreText {
+            get {
+                return ((string)(this["Sub_ListIgnoreText"]));
+            }
+            set {
+                this["Sub_ListIgnoreText"] = value;
+            }
+        }
     }
 }

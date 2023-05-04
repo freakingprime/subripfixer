@@ -30,6 +30,8 @@ namespace SubripFixer.UI_SearchTitle.View
             InitializeComponent();
             context = (SearchTitleVm)this.DataContext;
             ChkFixOverlap.IsChecked = Properties.Settings.Default.Sub_FixTimestamp;
+            ChkIgnoreText.IsChecked = Properties.Settings.Default.Sub_IgnoreText;
+            TxtIgnore.Text = Properties.Settings.Default.Sub_ListIgnoreText;
         }
 
         private SearchTitleVm context;
@@ -51,6 +53,19 @@ namespace SubripFixer.UI_SearchTitle.View
         {
             var chk = (CheckBox)sender;
             Properties.Settings.Default.Sub_FixTimestamp = (bool)chk.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ChkIgnoreText_Checked(object sender, RoutedEventArgs e)
+        {
+            var chk = (CheckBox)sender;
+            Properties.Settings.Default.Sub_IgnoreText = (bool)chk.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void TxtIgnore_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Properties.Settings.Default.Sub_ListIgnoreText = ((TextBox)sender).Text;
             Properties.Settings.Default.Save();
         }
     }

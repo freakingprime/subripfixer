@@ -210,8 +210,7 @@
 echo %25mydate%25 &gt; "$(ProjectDir)\config\BuildTime.txt"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy "$(ProjectDir)bin\Release" "E:\SETUP\OTHERS 3\SubripFixer\" /Y /I /E</PostBuildEvent>
   </PropertyGroup>
   <Target Name="AfterBuild">
     <ItemGroup>
