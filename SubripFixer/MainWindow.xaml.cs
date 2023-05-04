@@ -41,7 +41,6 @@ namespace SubripFixer
             {
                 TabMain.SelectedIndex = index;
             }
-
         }
 
         private MainWindowVm context = null;
