@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.UI;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.TextFormatting;
 
@@ -43,7 +44,9 @@ namespace SubripFixer.UI_SearchTitle.ViewModel
                 for (int i = 1; i < args.Length; ++i)
                 {
                     string path = args[i];
-                    path = @"D:\DOWNLOADED\bbb (3).srt";
+#if DEBUG
+                    path = @"D:\DOWNLOADED\cosmic\new 2 - Copy.srt";
+#endif
                     oldLog.Debug("Process file: " + path);
                     FileInfo fi = new FileInfo(path);
                     if (fi.Exists && fi.Extension.IndexOf("srt", StringComparison.OrdinalIgnoreCase) >= 0)
@@ -66,6 +69,13 @@ namespace SubripFixer.UI_SearchTitle.ViewModel
                 }
             });
             await task;
+#if !DEBUG
+            if (args.Length > 1)
+            {
+                //run from Open With
+                System.Windows.Application.Current.Shutdown();
+            }
+#endif
         }
 
         private List<SubtitleEntry> ProcessFile(string path)

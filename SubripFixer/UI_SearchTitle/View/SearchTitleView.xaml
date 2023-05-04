@@ -57,6 +57,10 @@
                           Name="ChkFixOverlap"
                           Checked="ChkFixOverlap_Checked"
                           Unchecked="ChkFixOverlap_Checked"/>
+                <CheckBox Content="Fix overlap timestamp"
+                          Name="ChkIgnoreText"
+                          Checked="ChkFixOverlap_Checked"
+                          Unchecked="ChkFixOverlap_Checked" />
             </StackPanel>
         </GroupBox>
     </StackPanel>
