@@ -42,8 +42,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>srt.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DefineConstants>TRACE;DEBUG</DefineConstants>
@@ -108,6 +107,7 @@
     <Compile Include="Converter\TitleConverter.cs" />
     <Compile Include="LogController.cs" />
     <Compile Include="MyConstants.cs" />
+    <Compile Include="UI_SearchTitle\Model\SubtitleEntry.cs" />
     <Compile Include="UI_SearchTitle\ViewModel\SearchTitleVm.cs" />
     <Compile Include="UI_SearchTitle\View\SearchTitleView.xaml.cs">
       <DependentUpon>SearchTitleView.xaml</DependentUpon>
@@ -175,6 +175,7 @@
     <Content Include="libraries\Interop.IDManLib.dll" />
     <Content Include="libraries\NETCore.Encrypt.dll" />
     <Content Include="libraries\System.Web.dll" />
+    <Resource Include="srt.ico" />
     <Resource Include="config\BuildTime.txt" />
     <Content Include="config\log4net_config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

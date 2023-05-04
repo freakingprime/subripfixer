@@ -28,7 +28,8 @@ namespace SubripFixer.UI_SearchTitle.View
         public SearchTitleView()
         {
             InitializeComponent();
-            this.context = (SearchTitleVm)this.DataContext;
+            context = (SearchTitleVm)this.DataContext;
+            ChkFixOverlap.IsChecked = Properties.Settings.Default.Sub_FixTimestamp;
         }
 
         private SearchTitleVm context;
@@ -37,8 +38,20 @@ namespace SubripFixer.UI_SearchTitle.View
         {
             if (e.NewValue != null && e.NewValue is SearchTitleVm vm)
             {
-                this.context = vm;
+                context = vm;
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            context.Loaded();
+        }
+
+        private void ChkFixOverlap_Checked(object sender, RoutedEventArgs e)
+        {
+            var chk = (CheckBox)sender;
+            Properties.Settings.Default.Sub_FixTimestamp = (bool)chk.IsChecked;
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -41,6 +41,13 @@ namespace SubripFixer
             {
                 TabMain.SelectedIndex = index;
             }
+
+            var arguments = Environment.GetCommandLineArgs();
+            oldLog.Debug("Argument count: " + arguments.Length);
+            foreach (var s in arguments)
+            {
+                oldLog.Debug("Arg: " + s);
+            }
         }
 
         private MainWindowVm context = null;

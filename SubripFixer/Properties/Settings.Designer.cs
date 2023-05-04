@@ -133,18 +133,6 @@ namespace SubripFixer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DatabasePath {
-            get {
-                return ((string)(this["DatabasePath"]));
-            }
-            set {
-                this["DatabasePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int TimeOutSecond {
             get {
@@ -164,6 +152,18 @@ namespace SubripFixer.Properties {
             }
             set {
                 this["BrowserHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Sub_FixTimestamp {
+            get {
+                return ((bool)(this["Sub_FixTimestamp"]));
+            }
+            set {
+                this["Sub_FixTimestamp"] = value;
             }
         }
     }

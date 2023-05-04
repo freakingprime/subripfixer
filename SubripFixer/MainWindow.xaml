@@ -61,10 +61,11 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     SelectionChanged="TabMain_SelectionChanged">
-            <TabItem Header="Search">
+            <TabItem Header="SRT Fix">
                 <search:SearchTitleView />
             </TabItem>
-            <TabItem Header="Template">
+            <TabItem Header="Template"
+                     Visibility="Collapsed">
                 <sampletemplate:TemplateView />
             </TabItem>
         </TabControl>
