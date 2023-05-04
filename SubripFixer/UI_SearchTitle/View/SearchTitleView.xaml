@@ -75,7 +75,8 @@
                          Height="200"
                          TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Visible"
-                         TextChanged="TxtIgnore_TextChanged" />
+                         TextChanged="TxtIgnore_TextChanged"
+                         AcceptsReturn="True" />
             </StackPanel>
         </GroupBox>
     </StackPanel>

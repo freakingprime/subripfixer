@@ -76,9 +76,15 @@ namespace SubripFixer.UI_SearchTitle.Model
                     {
                         if (listIgnore[k].Length > 0)
                         {
-                            while (ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase) >= 0)
+                            //while (ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase) >= 0)
+                            //{
+                            //    ListContent[i] = ListContent[i].Remove(ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase), listIgnore[k].Length);
+                            //}
+
+                            //only remove if whole line match the text
+                            if (ListContent[i].Equals(listIgnore[k], StringComparison.OrdinalIgnoreCase))
                             {
-                                ListContent[i] = ListContent[i].Remove(ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase), listIgnore[k].Length);
+                                ListContent[i] = "";
                             }
                         }
                     }
