@@ -20,14 +20,8 @@
     <Setting Name="UserAgent" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="BrowserHeight" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="LogWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="LastHistory" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsLogWrapped" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -41,8 +35,8 @@
     <Setting Name="TimeOutSecond" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Search_CustomCookies" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="BrowserHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

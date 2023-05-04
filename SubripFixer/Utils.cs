@@ -1,9 +1,4 @@
-﻿using CefSharp;
-using CefSharp.DevTools.HeapProfiler;
-using HtmlAgilityPack;
-using Microsoft.Data.Sqlite;
-using NETCore.Encrypt;
-using Newtonsoft.Json;
+﻿using NETCore.Encrypt;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,22 +72,7 @@ namespace SubripFixer
                     return null;
             }
             return cookieData.ToString().Trim();
-        }
-
-        public static string GetCefSharpCookies(string targetUrl)
-        {
-            var sb = new StringBuilder();
-            var visitor = new MyCookieVisitor();
-            if (Cef.GetGlobalCookieManager().VisitUrlCookies(targetUrl, true, visitor))
-            {
-                visitor.WaitForAllCookies();
-            }
-            foreach (var nameValue in visitor.NamesValues)
-            {
-                sb.Append(nameValue.Item1 + "=" + nameValue.Item2).Append(";");
-            }
-            return sb.ToString().Trim();
-        }
+        }     
 
         #endregion    
 
@@ -160,12 +140,6 @@ namespace SubripFixer
             oldLog.SetValueProgress(value.Percent, value.Text);
         });
 
-
-        #endregion
-
-        #region Use custom cookies
-
-        public static bool UseCustomCookies = false;
 
         #endregion
 

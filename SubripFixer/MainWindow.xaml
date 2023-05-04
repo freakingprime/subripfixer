@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SubripFixer"
         xmlns:search="clr-namespace:SubripFixer.UI_SearchTitle.View"
-        xmlns:cefWpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
-        xmlns:cefCore="clr-namespace:CefSharp;assembly=CefSharp.Core"
+        xmlns:sampletemplate="clr-namespace:SubripFixer.UI_Template.View"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:myBehaviors="clr-namespace:SubripFixer.Behaviours"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
@@ -19,8 +18,7 @@
         Background="{x:Static SystemColors.ControlBrush}"
         Title="{Binding WindowTitle}"
         Height="450"
-        Width="800"
-        Icon="gear.ico">
+        Width="800">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin"
@@ -65,7 +63,10 @@
                     SelectionChanged="TabMain_SelectionChanged">
             <TabItem Header="Search">
                 <search:SearchTitleView />
-            </TabItem>           
+            </TabItem>
+            <TabItem Header="Template">
+                <sampletemplate:TemplateView />
+            </TabItem>
         </TabControl>
 
         <GridSplitter Grid.Row="2"
@@ -90,172 +91,6 @@
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <WrapPanel Name="StackWebToolbar"
-                           DockPanel.Dock="Top"
-                           Orientation="Horizontal"
-                           Margin="5">
-                    <WrapPanel.Resources>
-                        <Style TargetType="TextBox">
-                            <Setter Property="VerticalAlignment"
-                                    Value="Center" />
-                            <Setter Property="Margin"
-                                    Value="2" />
-                        </Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="VerticalAlignment"
-                                    Value="Center" />
-                            <Setter Property="Margin"
-                                    Value="2" />
-                        </Style>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="VerticalAlignment"
-                                    Value="Center" />
-                            <Setter Property="Margin"
-                                    Value="2" />
-                        </Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Width"
-                                    Value="Auto" />
-                            <Setter Property="MinWidth"
-                                    Value="50" />
-                            <Setter Property="Margin"
-                                    Value="2" />
-                        </Style>
-                    </WrapPanel.Resources>
-
-                    <Button Content="Back"
-                            Command="{Binding WebBrowser.BackCommand, ElementName=Browser}" />
-
-                    <Button Content="Forward"
-                            Command="{Binding WebBrowser.ForwardCommand, ElementName=Browser}" />
-
-                    <Button Name="BtnPasteLink"
-                            Content="Paste"
-                            Click="BtnPasteLink_Click" />
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="TxtAddress"
-                                 Text="{Binding Address, ElementName=Browser, FallbackValue=www.google.com}"
-                                 Width="200"
-                                 TextChanged="txtBoxAddress_TextChanged">
-                            <behaviors:Interaction.Behaviors>
-                                <myBehaviors:TextBoxBindingUpdateOnEnterBehaviour />
-                            </behaviors:Interaction.Behaviors>
-                        </TextBox>
-                        <Button Name="BtnGoWeb"
-                                Content="Go"
-                                Click="BtnGoWeb_Click" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center">
-                        <TextBlock Text="History" />
-                        <ComboBox Name="ComboHistory"
-                                  DisplayMemberPath="DisplayText"
-                                  SelectedValuePath="Value"
-                                  SelectedItem="{Binding SelectedHistory,Mode=TwoWay}"
-                                  Width="60"
-                                  ToolTip="{Binding Value}"
-                                  SelectionChanged="ComboHistory_SelectionChanged"
-                                  ItemsSource="{Binding ListHistory}">
-                            <ComboBox.ItemContainerStyle>
-                                <Style TargetType="ComboBoxItem">
-                                    <Setter Property="ToolTip"
-                                            Value="{Binding Value}" />
-                                    <EventSetter Event="PreviewMouseDown"
-                                                 Handler="ComboBoxItem_PreviewMouseDown" />
-                                </Style>
-                            </ComboBox.ItemContainerStyle>
-                        </ComboBox>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center">
-                        <TextBlock Text="Select URL" />
-                        <ComboBox Name="ComboPredefinedUrl"
-                                  DisplayMemberPath="DisplayText"
-                                  SelectedValuePath="Value"
-                                  SelectedItem="{Binding SelectedPredefined,Mode=TwoWay}"
-                                  Width="60"
-                                  SelectionChanged="ComboPredefinedUrl_SelectionChanged"
-                                  ItemsSource="{Binding ListPredefinedUrl}">
-                            <ComboBox.ItemContainerStyle>
-                                <Style>
-                                    <Setter Property="Control.ToolTip"
-                                            Value="{Binding Value}" />
-                                </Style>
-                            </ComboBox.ItemContainerStyle>
-                        </ComboBox>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="User Agent" />
-                        <TextBox Name="TextUserAgent"
-                                 Width="100"
-                                 Text="{Binding UserAgent,Mode=TwoWay}"
-                                 TextChanged="TextUserAgent_TextChanged" />
-                    </StackPanel>
-
-                    <Button Content="View source"
-                            Command="{Binding WebBrowser.ViewSourceCommand, ElementName=Browser}" />
-
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Content="Use custom cookies"
-                                  VerticalAlignment="Center"
-                                  Name="CheckboxUseCustomCookie"
-                                  Checked="CheckboxUseCustomCookie_Checked"
-                                  Unchecked="CheckboxUseCustomCookie_Checked" />
-                        <TextBox x:Name="TxtCustomCookie"
-                                 Width="100"
-                                 TextChanged="TxtCustomCookie_TextChanged" />
-                    </StackPanel>
-                </WrapPanel>
-
-                <Border Grid.Row="1"
-                        BorderBrush="Gray"
-                        BorderThickness="0,1">
-                    <cefWpf:ChromiumWebBrowser x:Name="Browser"
-                                               LoadingStateChanged="Browser_LoadingStateChanged"
-                                               TitleChanged="Browser_TitleChanged">
-                        <behaviors:Interaction.Behaviors>
-                            <myBehaviors:HoverLinkBehaviour x:Name="HoverLinkBehaviour" />
-                        </behaviors:Interaction.Behaviors>
-                    </cefWpf:ChromiumWebBrowser>
-                </Border>
-                <ProgressBar IsIndeterminate="{Binding IsLoading, ElementName=Browser}"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Top"
-                             Width="Auto"
-                             Grid.Row="1"
-                             Height="2"
-                             Visibility="{Binding IsLoading, ElementName=Browser, Converter={StaticResource BooleanToVisibilityConverter}}"
-                             BorderThickness="0" />
-                <StatusBar Grid.Row="2"
-                           HorizontalAlignment="Stretch"
-                           HorizontalContentAlignment="Stretch">
-                    <StatusBar.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </StatusBar.ItemsPanel>
-                    <StatusBarItem>
-                        <TextBlock Name="TxtNotice"
-                                   Text="{Binding TextNotice}" />
-                    </StatusBarItem>
-                    <Separator />
-                    <StatusBarItem>
-                        <TextBlock Text="{Binding HoverLink, ElementName=HoverLinkBehaviour}" />
-                    </StatusBarItem>
-
-                    <!--<StatusBarItem Grid.Column="2">
-                        <TextBlock HorizontalAlignment="Right" TextAlignment="Right" Grid.Column="3" VerticalAlignment="Center">
-                            Chromium: <Run Text="{Binding Source={x:Static cefCore:Cef.ChromiumVersion}, Mode=OneTime}" />,
-                            CEF: <Run Text="{Binding Source={x:Static cefCore:Cef.CefVersion}, Mode=OneTime}" />,
-                            CefSharp: <Run Text="{Binding Source={x:Static cefCore:Cef.CefSharpVersion}, Mode=OneTime}"/>,
-                            Environment: <Run Text="{Binding Converter={StaticResource EnvironmentConverter}, Mode=OneTime}"/>
-                        </TextBlock>
-                    </StatusBarItem>-->
-                </StatusBar>
             </Grid>
 
             <GridSplitter Grid.Column="1"

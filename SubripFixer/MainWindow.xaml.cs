@@ -1,6 +1,4 @@
-﻿using CefSharp;
-using CefSharp.Wpf;
-using NETCore.Encrypt;
+﻿using NETCore.Encrypt;
 using SubripFixer.UI_SearchTitle.ViewModel;
 using SubripFixer.Utility;
 using System;
@@ -44,14 +42,6 @@ namespace SubripFixer
                 TabMain.SelectedIndex = index;
             }
 
-            //Set custom cookies
-            TxtCustomCookie.Text = Properties.Settings.Default.Search_CustomCookies;
-            CheckboxUseCustomCookie.IsChecked = true;
-            CheckboxUseCustomCookie.IsChecked = false;
-
-#if !DEBUG
-            TabForumFetch.Visibility = Visibility.Collapsed;
-#endif
         }
 
         private MainWindowVm context = null;
@@ -117,44 +107,6 @@ namespace SubripFixer
 
             //Call for sub ViewModel closing
             context.Closing();
-            Cef.Shutdown();
-        }
-
-        private void BtnPasteLink_Click(object sender, RoutedEventArgs e)
-        {
-            TxtAddress.Text = Clipboard.GetText().Trim();
-        }
-
-        private void BtnGoWeb_Click(object sender, RoutedEventArgs e)
-        {
-            GoToAddress(TxtAddress.Text);
-        }
-
-        private void GoToAddress(string url)
-        {
-            context.TextNotice = string.Empty;
-            try
-            {
-                Browser.Address = url;
-            }
-            catch (Exception e1)
-            {
-                string prefix = "Cannot parse text to URL: " + url + ". ";
-                log.Error(prefix, e1);
-                context.TextNotice = prefix + (e1.Message ?? "No more information.");
-            }
-        }
-
-        private void ComboPredefinedUrl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox combo = (ComboBox)sender;
-            TxtAddress.Text = combo.SelectedValue.ToString();
-        }
-
-        private void TextUserAgent_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Properties.Settings.Default.UserAgent = ((TextBox)sender).Text.Trim();
-            Properties.Settings.Default.Save();
         }
 
         private void TextboxLog_TextChanged(object sender, TextChangedEventArgs e)
@@ -165,23 +117,6 @@ namespace SubripFixer
         private void BtnClearLog_Click(object sender, RoutedEventArgs e)
         {
             TextboxLog.Clear();
-        }
-
-        private void ComboHistory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox combo = (ComboBox)sender;
-            TxtAddress.Text = combo.SelectedValue.ToString();
-        }
-
-        private void ComboBoxItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (Keyboard.Modifiers == ModifierKeys.Shift)
-            {
-                MyComboboxItemVm vm = ((ComboBoxItem)sender).DataContext as MyComboboxItemVm;
-                Clipboard.SetText(vm.Value);
-                log.Debug("Copy URL to clipboard: " + vm.Value);
-                e.Handled = true;
-            }
         }
 
         private void BtnToggleWrap_Click(object sender, RoutedEventArgs e)
@@ -197,61 +132,9 @@ namespace SubripFixer
             Properties.Settings.Default.Save();
         }
 
-        private void txtBoxAddress_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (context != null)
-            {
-                context.CurrentUrl = ((TextBox)sender).Text;
-            }
-        }
-
-        private void Browser_LoadingStateChanged(object sender, CefSharp.LoadingStateChangedEventArgs e)
-        {
-            string url = e.Browser.MainFrame.Url;
-            if (e.IsLoading)
-            {
-                log.Debug("Loading: " + url);
-                return;
-            }
-            log.Info("Page is loaded: " + url);
-        }
-
-        private void Browser_TitleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ChromiumWebBrowser browser = (ChromiumWebBrowser)sender;
-            string title = e.NewValue.ToString();
-            string url = browser.GetMainFrame().Url;
-            log.Info("Title changed to: " + title + " | URL: " + url);
-            context.InsertHistory(title, url);
-
-            //save cookie for search tab
-            //if (url.ToLower().Contains(MyConstants.JL_CORE_URL))
-            //{
-            //    string tempCookie = Utils.GetCefSharpCookies(MyConstants.JL_HOME);
-            //    if (!tempCookie.Equals(Properties.Settings.Default.Search_Cookie))
-            //    {
-            //        oldLog.Debug("New cookies are updated: " + tempCookie);
-            //        Properties.Settings.Default.Search_Cookie = tempCookie;
-            //    }
-            //}
-            Properties.Settings.Default.Save();
-        }
-
         private void BtnCopyLog_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(TextboxLog.Text);
-        }
-
-        private void TxtCustomCookie_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Properties.Settings.Default.Search_CustomCookies = TxtCustomCookie.Text.Trim();
-            Properties.Settings.Default.Save();
-        }
-
-        private void CheckboxUseCustomCookie_Checked(object sender, RoutedEventArgs e)
-        {
-            log.Info("Use custom cookie status changed to: " + CheckboxUseCustomCookie.IsChecked);
-            Utils.UseCustomCookies = (bool)CheckboxUseCustomCookie.IsChecked;
         }
     }
 }

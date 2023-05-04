@@ -117,20 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AES_KEY" xml:space="preserve">
-    <value>6wwIN1y2WZbaLt2nsfkJcTWlyBb06UsP</value>
-  </data>
-  <data name="AES_ZIV" xml:space="preserve">
-    <value>6wwIN1y2WZbaLt2n</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BuildTime" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\config\BuildTime.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="TITLE" xml:space="preserve">
-    <value>Link Checker</value>
+    <value>Subrip Fixer</value>
   </data>
   <data name="VERSION" xml:space="preserve">
-    <value>3.0</value>
+    <value>1.0</value>
   </data>
 </root>
