@@ -72,7 +72,7 @@
         <GroupBox Header="Ignore text">
             <StackPanel>
                 <TextBox x:Name="TxtIgnore"
-                         Height="200"
+                         Height="150"
                          TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Visible"
                          TextChanged="TxtIgnore_TextChanged"

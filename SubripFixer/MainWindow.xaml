@@ -13,12 +13,10 @@
         d:DataContext="{d:DesignInstance local:MainWindowVm,IsDesignTimeCreatable=True}"
         Closing="Window_Closing"
         Loaded="Window_Loaded"
-        MinWidth="850"
-        MinHeight="650"
+        MinWidth="350"
+        MinHeight="500"
         Background="{x:Static SystemColors.ControlBrush}"
-        Title="{Binding WindowTitle}"
-        Height="450"
-        Width="800">
+        Title="{Binding WindowTitle}">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin"
@@ -46,7 +44,6 @@
             <RowDefinition Name="RowWeb"
                            Height="*"
                            MinHeight="100" />
-
         </Grid.RowDefinitions>
 
         <DockPanel Name="DockToolbar"
@@ -77,31 +74,7 @@
                       Background="Red" />
 
         <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="ColCefSharp"
-                                  Width="*" />
-                <ColumnDefinition Name="ColSplitWebLog"
-                                  Width="3" />
-                <ColumnDefinition Name="ColLog"
-                                  MinWidth="100" />
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-            </Grid>
-
-            <GridSplitter Grid.Column="1"
-                          VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-                          Background="Red"
-                          ResizeBehavior="PreviousAndNext" />
-
-            <DockPanel Grid.Column="2"
-                       LastChildFill="True">
+            <DockPanel LastChildFill="True">
                 <DockPanel DockPanel.Dock="Top">
                     <ProgressBar Name="TheProgressBar"
                                  DockPanel.Dock="Left"

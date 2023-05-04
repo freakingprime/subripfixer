@@ -72,11 +72,7 @@ namespace SubripFixer
             if (Properties.Settings.Default.BrowserHeight > 10)
             {
                 RowWeb.Height = new GridLength(Properties.Settings.Default.BrowserHeight);
-            }
-            if (Properties.Settings.Default.LogWidth > 10)
-            {
-                ColLog.Width = new GridLength(Properties.Settings.Default.LogWidth);
-            }
+            }           
 
             //run initialize for sub ViewModel            
             context.Loaded();
@@ -105,7 +101,6 @@ namespace SubripFixer
 
             //Save panel sizes
             Properties.Settings.Default.BrowserHeight = RowWeb.Height.Value;
-            Properties.Settings.Default.LogWidth = ColLog.Width.Value;
 
             Properties.Settings.Default.LastActivatedTab = TabMain.SelectedIndex;
 
