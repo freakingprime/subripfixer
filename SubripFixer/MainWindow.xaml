@@ -1,0 +1,337 @@
+﻿<Window x:Class="SubripFixer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SubripFixer"
+        xmlns:search="clr-namespace:SubripFixer.UI_SearchTitle.View"
+        xmlns:cefWpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:cefCore="clr-namespace:CefSharp;assembly=CefSharp.Core"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:myBehaviors="clr-namespace:SubripFixer.Behaviours"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local:MainWindowVm,IsDesignTimeCreatable=True}"
+        Closing="Window_Closing"
+        Loaded="Window_Loaded"
+        MinWidth="850"
+        MinHeight="650"
+        Background="{x:Static SystemColors.ControlBrush}"
+        Title="{Binding WindowTitle}"
+        Height="450"
+        Width="800"
+        Icon="gear.ico">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin"
+                    Value="2" />
+            <Setter Property="Padding"
+                    Value="2" />
+            <Setter Property="MinWidth"
+                    Value="50" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainWindowVm />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="RowToolbar"
+                           Height="Auto" />
+            <RowDefinition Name="RowTab"
+                           Height="*"
+                           MinHeight="100" />
+            <RowDefinition Name="RowSplitter2"
+                           Height="3" />
+            <RowDefinition Name="RowWeb"
+                           Height="*"
+                           MinHeight="100" />
+
+        </Grid.RowDefinitions>
+
+        <DockPanel Name="DockToolbar"
+                   Grid.Row="0"
+                   LastChildFill="False">
+            <TextBlock Text="This is space for toolbar"
+                       DockPanel.Dock="Left" />
+        </DockPanel>
+
+        <TabControl Name="TabMain"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    SelectionChanged="TabMain_SelectionChanged">
+            <TabItem Header="Search">
+                <search:SearchTitleView />
+            </TabItem>           
+        </TabControl>
+
+        <GridSplitter Grid.Row="2"
+                      ResizeBehavior="PreviousAndNext"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Background="Red" />
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="ColCefSharp"
+                                  Width="*" />
+                <ColumnDefinition Name="ColSplitWebLog"
+                                  Width="3" />
+                <ColumnDefinition Name="ColLog"
+                                  MinWidth="100" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <WrapPanel Name="StackWebToolbar"
+                           DockPanel.Dock="Top"
+                           Orientation="Horizontal"
+                           Margin="5">
+                    <WrapPanel.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center" />
+                            <Setter Property="Margin"
+                                    Value="2" />
+                        </Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center" />
+                            <Setter Property="Margin"
+                                    Value="2" />
+                        </Style>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center" />
+                            <Setter Property="Margin"
+                                    Value="2" />
+                        </Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Width"
+                                    Value="Auto" />
+                            <Setter Property="MinWidth"
+                                    Value="50" />
+                            <Setter Property="Margin"
+                                    Value="2" />
+                        </Style>
+                    </WrapPanel.Resources>
+
+                    <Button Content="Back"
+                            Command="{Binding WebBrowser.BackCommand, ElementName=Browser}" />
+
+                    <Button Content="Forward"
+                            Command="{Binding WebBrowser.ForwardCommand, ElementName=Browser}" />
+
+                    <Button Name="BtnPasteLink"
+                            Content="Paste"
+                            Click="BtnPasteLink_Click" />
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="TxtAddress"
+                                 Text="{Binding Address, ElementName=Browser, FallbackValue=www.google.com}"
+                                 Width="200"
+                                 TextChanged="txtBoxAddress_TextChanged">
+                            <behaviors:Interaction.Behaviors>
+                                <myBehaviors:TextBoxBindingUpdateOnEnterBehaviour />
+                            </behaviors:Interaction.Behaviors>
+                        </TextBox>
+                        <Button Name="BtnGoWeb"
+                                Content="Go"
+                                Click="BtnGoWeb_Click" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="History" />
+                        <ComboBox Name="ComboHistory"
+                                  DisplayMemberPath="DisplayText"
+                                  SelectedValuePath="Value"
+                                  SelectedItem="{Binding SelectedHistory,Mode=TwoWay}"
+                                  Width="60"
+                                  ToolTip="{Binding Value}"
+                                  SelectionChanged="ComboHistory_SelectionChanged"
+                                  ItemsSource="{Binding ListHistory}">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="ToolTip"
+                                            Value="{Binding Value}" />
+                                    <EventSetter Event="PreviewMouseDown"
+                                                 Handler="ComboBoxItem_PreviewMouseDown" />
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Select URL" />
+                        <ComboBox Name="ComboPredefinedUrl"
+                                  DisplayMemberPath="DisplayText"
+                                  SelectedValuePath="Value"
+                                  SelectedItem="{Binding SelectedPredefined,Mode=TwoWay}"
+                                  Width="60"
+                                  SelectionChanged="ComboPredefinedUrl_SelectionChanged"
+                                  ItemsSource="{Binding ListPredefinedUrl}">
+                            <ComboBox.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Control.ToolTip"
+                                            Value="{Binding Value}" />
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="User Agent" />
+                        <TextBox Name="TextUserAgent"
+                                 Width="100"
+                                 Text="{Binding UserAgent,Mode=TwoWay}"
+                                 TextChanged="TextUserAgent_TextChanged" />
+                    </StackPanel>
+
+                    <Button Content="View source"
+                            Command="{Binding WebBrowser.ViewSourceCommand, ElementName=Browser}" />
+
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Content="Use custom cookies"
+                                  VerticalAlignment="Center"
+                                  Name="CheckboxUseCustomCookie"
+                                  Checked="CheckboxUseCustomCookie_Checked"
+                                  Unchecked="CheckboxUseCustomCookie_Checked" />
+                        <TextBox x:Name="TxtCustomCookie"
+                                 Width="100"
+                                 TextChanged="TxtCustomCookie_TextChanged" />
+                    </StackPanel>
+                </WrapPanel>
+
+                <Border Grid.Row="1"
+                        BorderBrush="Gray"
+                        BorderThickness="0,1">
+                    <cefWpf:ChromiumWebBrowser x:Name="Browser"
+                                               LoadingStateChanged="Browser_LoadingStateChanged"
+                                               TitleChanged="Browser_TitleChanged">
+                        <behaviors:Interaction.Behaviors>
+                            <myBehaviors:HoverLinkBehaviour x:Name="HoverLinkBehaviour" />
+                        </behaviors:Interaction.Behaviors>
+                    </cefWpf:ChromiumWebBrowser>
+                </Border>
+                <ProgressBar IsIndeterminate="{Binding IsLoading, ElementName=Browser}"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Top"
+                             Width="Auto"
+                             Grid.Row="1"
+                             Height="2"
+                             Visibility="{Binding IsLoading, ElementName=Browser, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             BorderThickness="0" />
+                <StatusBar Grid.Row="2"
+                           HorizontalAlignment="Stretch"
+                           HorizontalContentAlignment="Stretch">
+                    <StatusBar.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </StatusBar.ItemsPanel>
+                    <StatusBarItem>
+                        <TextBlock Name="TxtNotice"
+                                   Text="{Binding TextNotice}" />
+                    </StatusBarItem>
+                    <Separator />
+                    <StatusBarItem>
+                        <TextBlock Text="{Binding HoverLink, ElementName=HoverLinkBehaviour}" />
+                    </StatusBarItem>
+
+                    <!--<StatusBarItem Grid.Column="2">
+                        <TextBlock HorizontalAlignment="Right" TextAlignment="Right" Grid.Column="3" VerticalAlignment="Center">
+                            Chromium: <Run Text="{Binding Source={x:Static cefCore:Cef.ChromiumVersion}, Mode=OneTime}" />,
+                            CEF: <Run Text="{Binding Source={x:Static cefCore:Cef.CefVersion}, Mode=OneTime}" />,
+                            CefSharp: <Run Text="{Binding Source={x:Static cefCore:Cef.CefSharpVersion}, Mode=OneTime}"/>,
+                            Environment: <Run Text="{Binding Converter={StaticResource EnvironmentConverter}, Mode=OneTime}"/>
+                        </TextBlock>
+                    </StatusBarItem>-->
+                </StatusBar>
+            </Grid>
+
+            <GridSplitter Grid.Column="1"
+                          VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+                          Background="Red"
+                          ResizeBehavior="PreviousAndNext" />
+
+            <DockPanel Grid.Column="2"
+                       LastChildFill="True">
+                <DockPanel DockPanel.Dock="Top">
+                    <ProgressBar Name="TheProgressBar"
+                                 DockPanel.Dock="Left"
+                                 HorizontalAlignment="Stretch"
+                                 Height="20"
+                                 Margin="5"
+                                 Width="100" />
+                    <Label Name="LabelPercentage"
+                           DockPanel.Dock="Right"
+                           Content="%"
+                           Width="Auto" />
+                </DockPanel>
+                <WrapPanel DockPanel.Dock="Bottom"
+                           FlowDirection="RightToLeft">
+                    <Button Name="BtnClearLog"
+                            Content="Clear"
+                            Click="BtnClearLog_Click" />
+                    <Button Name="BtnToggleWrap"
+                            Click="BtnToggleWrap_Click"
+                            Margin="2">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsLogWrapped}"
+                                                 Value="True">
+                                        <Setter Property="Content"
+                                                Value="Wrapped" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsLogWrapped}"
+                                                 Value="False">
+                                        <Setter Property="Content"
+                                                Value="No Wrap" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="BtnCopyLog"
+                            Content="Copy"
+                            Click="BtnCopyLog_Click" />
+                </WrapPanel>
+                <TextBox DockPanel.Dock="Top"
+                         Name="TextboxLog"
+                         TextChanged="TextboxLog_TextChanged"
+                         HorizontalScrollBarVisibility="Visible"
+                         Background="Aquamarine"
+                         Margin="2"
+                         VerticalScrollBarVisibility="Visible">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsLogWrapped}"
+                                             Value="True">
+                                    <Setter Property="TextWrapping"
+                                            Value="Wrap" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsLogWrapped}"
+                                             Value="False">
+                                    <Setter Property="TextWrapping"
+                                            Value="NoWrap" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>
