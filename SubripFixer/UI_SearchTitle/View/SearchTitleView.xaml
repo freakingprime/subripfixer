@@ -90,6 +90,9 @@
                 <Button Name="BtnAddContextMenu"
                         Content="Add context menu"
                         Click="BtnAddContextMenu_Click" />
+                <Button Name="BtnRemoveContextMenu"
+                        Content="Remove Context Menu" 
+                        Click="BtnRemoveContextMenu_Click"/>
             </StackPanel>
         </GroupBox>
     </StackPanel>

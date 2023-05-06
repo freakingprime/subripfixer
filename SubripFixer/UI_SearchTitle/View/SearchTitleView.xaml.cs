@@ -97,6 +97,7 @@ namespace SubripFixer.UI_SearchTitle.View
             sb.AppendLine();
             sb.AppendLine(@"[HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\shell]");
             sb.AppendLine();
+            sb.AppendLine(@"[HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\shell\Subrip Fixer]");
 
             string path = "";
             FileInfo icon = new FileInfo("srt.ico");
@@ -111,8 +112,7 @@ namespace SubripFixer.UI_SearchTitle.View
             if (path.Length > 0)
             {
                 oldLog.Debug("Use icon: " + path);
-                path = path.Replace(@"\", @"\\");
-                sb.AppendLine(@"[HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\shell\Subrip Fixer]");
+                path = path.Replace(@"\", @"\\");              
                 // "Icon"="\"E:\\SETUP\\OTHERS 3\\SubripFixer\\srt.ico\""
                 sb.AppendLine(@"""Icon""=""\""" + path + @"\""""");
                 sb.AppendLine();
@@ -135,6 +135,21 @@ namespace SubripFixer.UI_SearchTitle.View
         {
             Properties.Settings.Default.Sub_IconFile = ((TextBox)sender).Text;
             Properties.Settings.Default.Save();
+        }
+
+        private void BtnRemoveContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(@"Windows Registry Editor Version 5.00");
+            sb.AppendLine();
+            sb.AppendLine(@"[-HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\shell\Subrip Fixer]");
+
+            FileInfo fi = new FileInfo("contextmenuremove.reg");
+            File.WriteAllText(fi.FullName, sb.ToString());
+            Process regeditProcess = Process.Start("regedit.exe", "/s \"" + fi.FullName + "\"");
+            regeditProcess.WaitForExit();
+
+            oldLog.Debug("Finish remove registry key");
         }
     }
 }
