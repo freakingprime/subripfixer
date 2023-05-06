@@ -159,6 +159,7 @@ namespace SubripFixer.UI_SearchTitle.View
                 File.Copy(fi.FullName, fi.FullName + "_" + DateTime.Now.ToString("HHmmss"), true);
             }
             File.WriteAllText(fi.FullName, Properties.Settings.Default.Sub_ListIgnoreText);
+            oldLog.Debug("Ignored text is backed up to: " + fi.FullName);
         }
     }
 }
