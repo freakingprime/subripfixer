@@ -55,7 +55,7 @@
                     Value="2" />
         </Style>
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel Orientation="Horizontal">
         <GroupBox Header="Options"
                   Padding="5">
             <StackPanel>
@@ -67,16 +67,29 @@
                           Name="ChkIgnoreText"
                           Checked="ChkIgnoreText_Checked"
                           Unchecked="ChkIgnoreText_Checked" />
-            </StackPanel>
-        </GroupBox>
-        <GroupBox Header="Ignore text">
-            <StackPanel>
                 <TextBox x:Name="TxtIgnore"
                          Height="150"
+                         Width="200"
                          TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Visible"
                          TextChanged="TxtIgnore_TextChanged"
                          AcceptsReturn="True" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Context menu register">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Icon file" />
+                    <Button Content="Browse"
+                            Name="BtnBrowseIcon"
+                            Click="BtnBrowseIcon_Click" />
+                    <TextBox Name="TxtIconFile"
+                             Width="200"
+                             TextChanged="TxtIconFile_TextChanged" />
+                </StackPanel>
+                <Button Name="BtnAddContextMenu"
+                        Content="Add context menu"
+                        Click="BtnAddContextMenu_Click" />
             </StackPanel>
         </GroupBox>
     </StackPanel>

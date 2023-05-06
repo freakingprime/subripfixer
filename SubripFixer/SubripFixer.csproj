@@ -175,7 +175,9 @@
     <Content Include="libraries\Interop.IDManLib.dll" />
     <Content Include="libraries\NETCore.Encrypt.dll" />
     <Content Include="libraries\System.Web.dll" />
-    <Resource Include="srt.ico" />
+    <Resource Include="srt.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="config\BuildTime.txt" />
     <Content Include="config\log4net_config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

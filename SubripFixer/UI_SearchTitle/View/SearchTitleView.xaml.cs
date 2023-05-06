@@ -1,7 +1,10 @@
-﻿using NETCore.Encrypt;
+﻿using Microsoft.Win32;
+using NETCore.Encrypt;
 using SubripFixer.UI_SearchTitle.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +35,7 @@ namespace SubripFixer.UI_SearchTitle.View
             ChkFixOverlap.IsChecked = Properties.Settings.Default.Sub_FixTimestamp;
             ChkIgnoreText.IsChecked = Properties.Settings.Default.Sub_IgnoreText;
             TxtIgnore.Text = Properties.Settings.Default.Sub_ListIgnoreText;
+            TxtIconFile.Text = Properties.Settings.Default.Sub_IconFile;
         }
 
         private SearchTitleVm context;
@@ -66,6 +70,70 @@ namespace SubripFixer.UI_SearchTitle.View
         private void TxtIgnore_TextChanged(object sender, TextChangedEventArgs e)
         {
             Properties.Settings.Default.Sub_ListIgnoreText = ((TextBox)sender).Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void BtnBrowseIcon_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Filter = "Icon files (*.ico)|*.ico|All files (*.*)|*.*"
+            };
+            if ((dialog.ShowDialog() ?? false) == true)
+            {
+                TxtIconFile.Text = dialog.FileName;
+            }
+        }
+
+        private void BtnAddContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            oldLog.Debug("EXE path: " + exePath);
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(@"Windows Registry Editor Version 5.00");
+            sb.AppendLine();
+            sb.AppendLine(@"[HKEY_CLASSES_ROOT\SystemFileAssociations\.srt]");
+            sb.AppendLine();
+            sb.AppendLine(@"[HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\shell]");
+            sb.AppendLine();
+
+            string path = "";
+            FileInfo icon = new FileInfo("srt.ico");
+            if (icon.Exists)
+            {
+                path = icon.FullName;
+            }
+            if (File.Exists(Properties.Settings.Default.Sub_IconFile))
+            {
+                path = Properties.Settings.Default.Sub_IconFile;
+            }
+            if (path.Length > 0)
+            {
+                oldLog.Debug("Use icon: " + path);
+                path = path.Replace(@"\", @"\\");
+                sb.AppendLine(@"[HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\shell\Subrip Fixer]");
+                // "Icon"="\"E:\\SETUP\\OTHERS 3\\SubripFixer\\srt.ico\""
+                sb.AppendLine(@"""Icon""=""\""" + path + @"\""""");
+                sb.AppendLine();
+            }
+
+            sb.AppendLine(@"[HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\shell\Subrip Fixer\command]");
+            exePath = exePath.Replace(@"\", @"\\");
+            // @="\"E:\\SETUP\\OTHERS 3\\SubripFixer\\SubripFixer.exe\" \"%1\""
+            sb.AppendLine(@"@=""\""" + exePath + @"\"" \""%1\""""");
+
+            FileInfo fi = new FileInfo("contextmenu.reg");
+            File.WriteAllText(fi.FullName, sb.ToString());
+            Process regeditProcess = Process.Start("regedit.exe", "/s \"" + fi.FullName + "\"");
+            regeditProcess.WaitForExit();
+
+            oldLog.Debug("Finish set registry key");
+        }
+
+        private void TxtIconFile_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Properties.Settings.Default.Sub_IconFile = ((TextBox)sender).Text;
             Properties.Settings.Default.Save();
         }
     }

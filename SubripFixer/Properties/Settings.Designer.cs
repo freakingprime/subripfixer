@@ -190,5 +190,17 @@ namespace SubripFixer.Properties {
                 this["Sub_ListIgnoreText"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Sub_IconFile {
+            get {
+                return ((string)(this["Sub_IconFile"]));
+            }
+            set {
+                this["Sub_IconFile"] = value;
+            }
+        }
     }
 }
