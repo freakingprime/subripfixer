@@ -1,6 +1,4 @@
-﻿using NETCore.Encrypt;
-using SubripFixer.UI_SearchTitle.ViewModel;
-using SubripFixer.Utility;
+﻿using SubripFixer.UI_SearchTitle.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

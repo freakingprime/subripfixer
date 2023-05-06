@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using NETCore.Encrypt;
 using SubripFixer.UI_SearchTitle.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -112,7 +111,7 @@ namespace SubripFixer.UI_SearchTitle.View
             if (path.Length > 0)
             {
                 oldLog.Debug("Use icon: " + path);
-                path = path.Replace(@"\", @"\\");              
+                path = path.Replace(@"\", @"\\");
                 // "Icon"="\"E:\\SETUP\\OTHERS 3\\SubripFixer\\srt.ico\""
                 sb.AppendLine(@"""Icon""=""\""" + path + @"\""""");
                 sb.AppendLine();
@@ -150,6 +149,16 @@ namespace SubripFixer.UI_SearchTitle.View
             regeditProcess.WaitForExit();
 
             oldLog.Debug("Finish remove registry key");
+        }
+
+        private void BtnBackupIgnored_Click(object sender, RoutedEventArgs e)
+        {
+            FileInfo fi = new FileInfo("backup_ignored.txt");
+            if (fi.Exists)
+            {
+                File.Copy(fi.FullName, fi.FullName + "_" + DateTime.Now.ToString("HHmmss"), true);
+            }
+            File.WriteAllText(fi.FullName, Properties.Settings.Default.Sub_ListIgnoreText);
         }
     }
 }

@@ -57,17 +57,7 @@
     <Reference Include="log4net, Version=2.0.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="NETCore.Encrypt, Version=2.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>libraries\NETCore.Encrypt.dll</HintPath>
-    </Reference>
     <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-    <Reference Include="Ookii.Dialogs.Wpf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ookii.Dialogs.Wpf.5.0.1\lib\net462\Ookii.Dialogs.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -76,9 +66,6 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Security" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libraries\System.Web.dll</HintPath>
@@ -101,10 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviours\TextBoxBindingUpdateOnEnterBehaviour.cs" />
-    <Compile Include="Converter\EnvironmentConverter.cs" />
-    <Compile Include="Converter\InverseBooleanConverter.cs" />
-    <Compile Include="Converter\TitleConverter.cs" />
     <Compile Include="LogController.cs" />
     <Compile Include="MyConstants.cs" />
     <Compile Include="UI_SearchTitle\Model\SubtitleEntry.cs" />
@@ -116,7 +99,6 @@
     <Compile Include="UI_Template\View\TemplateView.xaml.cs">
       <DependentUpon>TemplateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utility\MyComboboxItemVm.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -169,15 +151,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="runtimes\win-x64\native\e_sqlite3.dll">
+    <None Include="srt.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="libraries\Interop.IDManLib.dll" />
-    <Content Include="libraries\NETCore.Encrypt.dll" />
-    <Content Include="libraries\System.Web.dll" />
-    <Resource Include="srt.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
     <Resource Include="config\BuildTime.txt" />
     <Content Include="config\log4net_config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -185,26 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI_Template\Model\" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="IDManLib">
-      <Guid>{ECF21EAB-3AA8-4355-82BE-F777990001DD}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="SHDocVw">
-      <Guid>{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>1</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

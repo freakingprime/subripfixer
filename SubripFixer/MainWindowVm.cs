@@ -1,6 +1,4 @@
-﻿using NETCore.Encrypt;
-using SubripFixer.MVVM;
-using SubripFixer.Utility;
+﻿using SubripFixer.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

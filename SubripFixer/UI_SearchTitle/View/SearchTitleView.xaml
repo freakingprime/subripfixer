@@ -68,17 +68,18 @@
                           Checked="ChkIgnoreText_Checked"
                           Unchecked="ChkIgnoreText_Checked" />
                 <TextBox x:Name="TxtIgnore"
-                         Height="150"
+                         Height="200"
                          Width="200"
-                         TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Visible"
+                         HorizontalScrollBarVisibility="Visible"
                          TextChanged="TxtIgnore_TextChanged"
                          AcceptsReturn="True" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Context menu register">
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"
+                            Visibility="Collapsed">
                     <TextBlock Text="Icon file" />
                     <Button Content="Browse"
                             Name="BtnBrowseIcon"
@@ -88,11 +89,14 @@
                              TextChanged="TxtIconFile_TextChanged" />
                 </StackPanel>
                 <Button Name="BtnAddContextMenu"
-                        Content="Add context menu"
+                        Content="Add Context Menu"
                         Click="BtnAddContextMenu_Click" />
                 <Button Name="BtnRemoveContextMenu"
-                        Content="Remove Context Menu" 
-                        Click="BtnRemoveContextMenu_Click"/>
+                        Content="Remove Context Menu"
+                        Click="BtnRemoveContextMenu_Click" />
+                <Button Name="BtnBackupIgnored"
+                        Content="Backup Ignored Text"
+                        Click="BtnBackupIgnored_Click" />
             </StackPanel>
         </GroupBox>
     </StackPanel>

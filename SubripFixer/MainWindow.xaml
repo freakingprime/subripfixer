@@ -7,8 +7,6 @@
         xmlns:search="clr-namespace:SubripFixer.UI_SearchTitle.View"
         xmlns:sampletemplate="clr-namespace:SubripFixer.UI_Template.View"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:myBehaviors="clr-namespace:SubripFixer.Behaviours"
-        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainWindowVm,IsDesignTimeCreatable=True}"
         Closing="Window_Closing"
