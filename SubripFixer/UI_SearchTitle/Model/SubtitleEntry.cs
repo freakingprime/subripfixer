@@ -95,7 +95,7 @@ namespace SubripFixer.UI_SearchTitle.Model
             }
 
             //remove sub if it's long and few characters
-            HashSet<char> hashChar = new HashSet<char>();
+            HashSet<string> hashChar = new HashSet<string>();
             int totalLength = 0;
             for (int i = 0; i < ListContent.Count; ++i)
             {
@@ -103,12 +103,12 @@ namespace SubripFixer.UI_SearchTitle.Model
                 {
                     if (c != ' ')
                     {
-                        hashChar.Add(c);
+                        hashChar.Add((c + "").ToLower());
                         ++totalLength;
                     }
                 }
             }
-            if (hashChar.Count <= 3 && totalLength > hashChar.Count * 3)
+            if ((hashChar.Count <= 3 && totalLength > hashChar.Count * 3) || (hashChar.Count <= 6 && totalLength > hashChar.Count * 5))
             {
                 //useless text
                 ListContent.Clear();
