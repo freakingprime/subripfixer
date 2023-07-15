@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 
@@ -19,6 +20,7 @@ namespace SubripFixer.UI_SearchTitle.Model
         public List<string> ListContent = new List<string>();
         public DateTime StartDate = DateTime.MinValue;
         public DateTime EndDate = DateTime.MinValue;
+        private Regex regexHearing = new Regex("[[【].+[]】]");
 
         public bool IsValid
         {
@@ -76,11 +78,6 @@ namespace SubripFixer.UI_SearchTitle.Model
                     {
                         if (listIgnore[k].Length > 0)
                         {
-                            //while (ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase) >= 0)
-                            //{
-                            //    ListContent[i] = ListContent[i].Remove(ListContent[i].IndexOf(listIgnore[k], StringComparison.OrdinalIgnoreCase), listIgnore[k].Length);
-                            //}
-
                             //only remove if whole line match the text
                             if (ListContent[i].Equals(listIgnore[k], StringComparison.OrdinalIgnoreCase))
                             {
@@ -89,6 +86,32 @@ namespace SubripFixer.UI_SearchTitle.Model
                         }
                     }
                 }
+            }
+
+            //remove hearing impaired
+            for (int i = 0; i < ListContent.Count; ++i)
+            {
+                ListContent[i] = regexHearing.Replace(ListContent[i], "");
+            }
+
+            //remove sub if it's long and few characters
+            HashSet<char> hashChar = new HashSet<char>();
+            int totalLength = 0;
+            for (int i = 0; i < ListContent.Count; ++i)
+            {
+                foreach (char c in ListContent[i])
+                {
+                    if (c != ' ')
+                    {
+                        hashChar.Add(c);
+                        ++totalLength;
+                    }
+                }
+            }
+            if (hashChar.Count <= 3 && totalLength > hashChar.Count * 3)
+            {
+                //useless text
+                ListContent.Clear();
             }
 
             //remove empty content

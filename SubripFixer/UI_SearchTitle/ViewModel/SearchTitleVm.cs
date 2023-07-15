@@ -44,9 +44,6 @@ namespace SubripFixer.UI_SearchTitle.ViewModel
                 for (int i = 1; i < args.Length; ++i)
                 {
                     string path = args[i];
-#if DEBUG
-                    path = @"D:\DOWNLOADED\cosmic\new 2 - Copy.srt";
-#endif
                     oldLog.Debug("Process file: " + path);
                     FileInfo fi = new FileInfo(path);
                     if (fi.Exists && fi.Extension.IndexOf("srt", StringComparison.OrdinalIgnoreCase) >= 0)
@@ -89,8 +86,10 @@ namespace SubripFixer.UI_SearchTitle.ViewModel
                 if (regexTime.IsMatch(line))
                 {
                     ret.Add(sub);
-                    sub = new SubtitleEntry();
-                    sub.TimeStr = line.Trim();
+                    sub = new SubtitleEntry
+                    {
+                        TimeStr = line.Trim()
+                    };
                 }
                 else
                 {
